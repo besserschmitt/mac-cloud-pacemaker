@@ -33,14 +33,19 @@ The application is structured to follow a "no accidental architecture" philosoph
 
 ---
 
-## Key Engineering Highlights
+## 
 
-* Resilience via OS Integration (launchd): Regulated via a dedicated macOS User LaunchAgent. By implementing <key>KeepAlive</key><true/>, the operating system actively monitors the process thread. If the Python script is terminated or crashes, launchd instantly auto-restarts it.
-* True Client Simulation: Modern Single Page Applications (SPAs) like Streamlit cannot be kept awake using primitive HTTP GET requests (e.g., curl), as they require a JavaScript runtime to fire up WebSockets. This engine uses a headless Chromium layer to execute the full page lifecycle.
-* Database Keep-Alive: By triggering the web application's initial load lifecycle (wait_until="load"), the underlying database layer (e.g., Supabase PostgreSQL) is forced to run its initial queries, preventing automated cloud project pausing due to inactivity.
-* Unbuffered Session Logs (python -u): Utilizing unbuffered binary I/O flags prevents Python from holding log buffers in memory. All outputs are instantly flushed into keep_alive.log for reliable real-time tracking.
-* Injection-Safe Shell Interaction: System notifications are channeled to the native macOS Notification Center using Python's subprocess pipeline. Isolating the arguments as strict list variables ensures special string characters (like // or .) in app titles do not break the shell boundary.
+🛠️ Key Engineering Highlights
 
+Resilience via OS Integration (```launchd```): Regulated via a dedicated macOS User LaunchAgent. By implementing `<key>`KeepAlive`</key><true/>`, the operating system actively monitors the process thread. If the Python script is terminated or crashes, ```launchd``` instantly auto-restarts it.
+
+True Client Simulation: Modern Single Page Applications (SPAs) like Streamlit cannot be kept awake using primitive HTTP ```GET``` requests (e.g., ```curl```), as they require a JavaScript runtime to fire up WebSockets. This engine uses a headless Chromium layer to execute the full page lifecycle.
+
+Database Keep-Alive: By triggering the web application's initial load lifecycle (```wait_until="load"```), the underlying database layer (e.g., Supabase PostgreSQL) is forced to run its initial queries, preventing automated cloud project pausing due to inactivity.
+
+Unbuffered Session Logs (```python -u```): Utilizing unbuffered binary I/O flags prevents Python from holding log buffers in memory. All outputs are instantly flushed into ```keep_alive.log``` for reliable real-time tracking.
+
+Injection-Safe Shell Interaction: System notifications are channeled to the native macOS Notification Center using Python’s ```subprocess``` pipeline. Isolating the arguments as strict list variables ensures special string characters (like ```//``` or ```·```) in app titles do not break the shell boundary.
 ---
 
 ## Installation & Configuration
@@ -70,8 +75,8 @@ TARGET_APPS = [
 
 ### 3. Deploy to macOS LaunchAgents
 1. Copy the template plist file into your system's LaunchAgents directory:
-```  cp config/com.username.keepalive.plist.example ~/Library/LaunchAgents/com.besserschmitt.keepalive.plist 
-```
+
+```  cp config/com.username.keepalive.plist.example ~/Library/LaunchAgents/com.besserschmitt.keepalive.plist ```
    
 2. Open the file and replace YOUR_MACOS_USERNAME with your actual macOS shortname:
 ```   nano ~/Library/LaunchAgents/com.besserschmitt.keepalive.plist ```
