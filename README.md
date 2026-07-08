@@ -37,7 +37,7 @@ The application is structured to follow a "no accidental architecture" philosoph
 
 🛠️ Key Engineering Highlights
 
-Resilience via OS Integration (```launchd```): Regulated via a dedicated macOS User LaunchAgent. By implementing `<key>`KeepAlive`</key><true/>`, the operating system actively monitors the process thread. If the Python script is terminated or crashes, ```launchd``` instantly auto-restarts it.
+Resilience via OS Integration (```launchd```): Regulated via a dedicated macOS User LaunchAgent. By implementing `<key>KeepAlive</key><true/>`, the operating system actively monitors the process thread. If the Python script is terminated or crashes, ```launchd``` instantly auto-restarts it.
 
 True Client Simulation: Modern Single Page Applications (SPAs) like Streamlit cannot be kept awake using primitive HTTP ```GET``` requests (e.g., ```curl```), as they require a JavaScript runtime to fire up WebSockets. This engine uses a headless Chromium layer to execute the full page lifecycle.
 
