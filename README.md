@@ -27,8 +27,8 @@ The application is structured to follow a "no accidental architecture" philosoph
          │                                                    ▼
          │                                         (Triggers runtime & DB handshakes)
          │
-         ├───► [ macOS Notification Center ] ───► Native push alert on status change 
-         ```
+         ├───► [ macOS Notification Center ] ───► Native push alert on status change
+```
 
 
 ---
@@ -47,26 +47,31 @@ The application is structured to follow a "no accidental architecture" philosoph
 
 ### 1. Clone & Setup Virtual Environment
 ``` git clone https://github.com/besserschmitt/mac-cloud-pacemaker.git
-cd mac-cloud-pacemaker ```
+cd mac-cloud-pacemaker 
+```
 
 # Create and activate isolated environment
 ``` python3 -m venv venv
-source venv/bin/activate ```
+source venv/bin/activate 
+```
 
 # Install automated browser dependencies
 ``` pip install -r requirements.txt
-playwright install chromium ```
+playwright install chromium 
+```
 
 ### 2. Configure Your App Targets
 ``` Open keep_alive.py and add your target URLs to the TARGET_APPS array:
 TARGET_APPS = [
     "https://your-app-1.streamlit.app/",
     "https://your-app-2.streamlit.app/"
-]```
+]
+```
 
 ### 3. Deploy to macOS LaunchAgents
 1. Copy the template plist file into your system's LaunchAgents directory:
-```  cp config/com.username.keepalive.plist.example ~/Library/LaunchAgents/com.besserschmitt.keepalive.plist ```
+```  cp config/com.username.keepalive.plist.example ~/Library/LaunchAgents/com.besserschmitt.keepalive.plist 
+```
    
 2. Open the file and replace YOUR_MACOS_USERNAME with your actual macOS shortname:
 ```   nano ~/Library/LaunchAgents/com.besserschmitt.keepalive.plist ```
@@ -83,10 +88,12 @@ The agent resets and spins up a fresh session log upon initialization. You can i
 ``` cat keep_alive.log ```
 
 ### Expected Output Structure:
-``` --- Starting Keep-Alive Session: 2026-07-08 11:00:55 ---
+``` 
+--- Starting Keep-Alive Session: 2026-07-08 11:00:55 ---
 Navigating to: https://your-app-1.streamlit.app/
 Successfully pinged! App Title: 'Production Dashboard'
---- Session Finished. Sleeping for 12 hours... --- ```
+--- Session Finished. Sleeping for 12 hours... --- 
+```
 
 Whenever a keep-alive cycle concludes, a native macOS notification banner will trigger, signaling whether all target systems have successfully responded or if a timeout occurred.
 
